@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Эффекты при наведении в DOM</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 0;
+            padding: 10px;
+            max-height: 100vh;
+        }
+
+        .inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 15px;
+        }
+
+        .square {
+            background-color: #f1f1f1;
+            box-shadow: 0 0 1px #fff;
+            height: 40px;
+            width: 40px;
+            margin: 2px;
+            transition: 1s ease;
+            border-radius: 40px;
+        }
+
+        .square:hover {
+            transition-duration: 0s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="inner">
+    </div>
+    <script>
+        const inner = document.querySelector('.inner');
+        const squareColors = ['#ed220d', '#b542e5', '#0d93ed', '#f2770b', '#8affbc', '#f2ff8a', '#ff38c2', '#e37f35'];
+        const BLOCKS = 512; 
+
+        for (let i = 0; i < BLOCKS; i++) {
+            const square = document.createElement('div');
+            square.classList.add('square');
+
+            square.addEventListener('mouseover', () => setColor(square));
+
+            square.addEventListener('mouseout', () => removeColor(square));
+
+            inner.appendChild(square)
+        }
+
+        function setColor(elem) {
+            const color = getRandomColor();
+            elem.style.background = color;
+            elem.style.boxShadow = `0 0 10px ${color}`;
+        }
+
+        function removeColor(elem) {
+            elem.style.background = '#f1f1f1';
+            elem.style.boxShadow = '0 0 4px #fff';
+        }
+
+        const getRandomColor = () => squareColors[Math.floor(Math.random() * squareColors.length)];
+    </script>
+</body>
+
+</html>
